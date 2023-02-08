@@ -1,7 +1,16 @@
 import React from "react";
+import axios from "axios";
+import ListProducts from "@/components/products/ListProducts";
 
-const HomePage = () => {
-  return <h1 className="text-1xl font-bold underline">Hello, Next.js!</h1>;
+const getProducts = async () => {
+  const { data } = await axios.get(`${process.env.API_URL}/api/products`);
+  return data;
+};
+
+const HomePage = async () => {
+  const productsData = await getProducts();
+
+  return <ListProducts data={productsData} />;
 };
 
 export default HomePage;
