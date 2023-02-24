@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
+import CustomPagination from "../layouts/CustomPagination";
 import Filters from "../layouts/Filters";
 
 import ProductItem from "./ProductItem";
 
 const ListProducts = ({ data }) => {
-  console.log(data);
   return (
     <section className="py-12">
       <div className="container max-w-screen-xl mx-auto px-4">
@@ -17,6 +17,11 @@ const ListProducts = ({ data }) => {
             {data?.products?.map((product) => (
               <ProductItem key={product?._id} product={product} />
             ))}
+
+            <CustomPagination
+              resPerPage={data?.resPerPage}
+              productsCount={data?.filteredProductsCount}
+            />
           </main>
         </div>
       </div>

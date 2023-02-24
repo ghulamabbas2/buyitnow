@@ -14,8 +14,10 @@
     "mongoose": "^6.9.1",
     "next": "13.1.6",
     "next-connect": "^0.13.0",
+    "query-string": "^8.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-js-pagination": "^3.0.3",
     "react-star-ratings": "^2.3.0",
     "supports-color": "^9.3.1"
   },
