@@ -22,7 +22,7 @@ const Profile = () => {
           <h5 className="font-semibold text-lg">{user?.name}</h5>
           <p>
             <b>Email:</b> {user?.email} | <b>Joined On:</b>
-            {user?.createdAt}
+            {user?.createdAt.substring(0, 10)}
           </p>
         </figcaption>
       </figure>
