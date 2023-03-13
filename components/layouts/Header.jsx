@@ -13,8 +13,6 @@ const Header = () => {
 
   const { data } = useSession();
 
-  console.log(data);
-
   useEffect(() => {
     if (data) {
       setUser(data?.user);
