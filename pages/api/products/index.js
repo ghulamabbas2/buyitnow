@@ -4,8 +4,9 @@ import {
   getProducts,
   newProduct,
 } from "@/backend/controllers/productControllers";
+import onError from "@/backend/middlewares/errors";
 
-const handler = nc();
+const handler = nc({ onError });
 
 dbConnect();
 
