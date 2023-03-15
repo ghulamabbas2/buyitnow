@@ -72,6 +72,25 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const updatePassword = async ({ currentPassword, newPassword }) => {
+    try {
+      const { data } = await axios.put(
+        `${process.env.API_URL}/api/auth/me/update_password`,
+        {
+          currentPassword,
+          newPassword,
+        }
+      );
+
+      if (data?.success) {
+        router.replace("/me");
+      }
+    } catch (error) {
+      console.log(error.response);
+      setError(error?.response?.data?.message);
+    }
+  };
+
   const addNewAddress = async (address) => {
     try {
       const { data } = await axios.post(
@@ -132,6 +151,7 @@ export const AuthProvider = ({ children }) => {
         setUser,
         registerUser,
         updateProfile,
+        updatePassword,
         addNewAddress,
         updateAddress,
         deleteAddress,
