@@ -25,6 +25,7 @@
     "react-js-pagination": "^3.0.3",
     "react-star-ratings": "^2.3.0",
     "react-toastify": "^9.1.1",
+    "stripe": "^12.1.1",
     "supports-color": "^9.3.1"
   },
   "devDependencies": {

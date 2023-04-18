@@ -1,6 +1,7 @@
 "use client";
 
 import CartContext from "@/context/CartContext";
+import axios from "axios";
 import Link from "next/link";
 import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
@@ -18,8 +19,20 @@ const Shipping = ({ addresses }) => {
   const checkoutHandler = async () => {
     if (!shippingInfo) {
       return toast.error("Please select your shipping address");
-    } else {
-      // move to stripe checkoutpage
+    }
+    // move to stripe checkoutpage
+    try {
+      const { data } = await axios.post(
+        `${process.env.API_URL}/api/orders/checkout_session`,
+        {
+          items: cart?.cartItems,
+          shippingInfo,
+        }
+      );
+
+      window.location.href = data.url;
+    } catch (error) {
+      console.log(error.response);
     }
   };
 
