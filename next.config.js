@@ -14,6 +14,8 @@ const nextConfig = {
     STRIPE_PUBLIC_KEY: "",
     STRIPE_PRIVATE_KEY: "",
 
+    STRIPE_WEBHOOK_SECRET: "",
+
     NEXTAUTH_SECRET: "codingwithabbas",
   },
   images: {
