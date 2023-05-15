@@ -1,7 +1,8 @@
 import Product from "../models/product";
 import APIFilters from "../utils/APIFilters";
-import { uploads } from "../utils/cloudinary";
+import { cloudinary, uploads } from "../utils/cloudinary";
 import fs from "fs";
+import ErrorHandler from "../utils/errorHandler";
 
 export const newProduct = async (req, res, next) => {
   req.body.user = req.user._id;
@@ -39,9 +40,7 @@ export const getProduct = async (req, res, next) => {
   const product = await Product.findById(req.query.id);
 
   if (!product) {
-    res.status(404).json({
-      error: "Product not found.",
-    });
+    return next(new ErrorHandler("Product not found.", 404));
   }
 
   res.status(200).json({
@@ -53,9 +52,7 @@ export const uploadProductImages = async (req, res, next) => {
   let product = await Product.findById(req.query.id);
 
   if (!product) {
-    res.status(404).json({
-      error: "Product not found.",
-    });
+    return next(new ErrorHandler("Product not found.", 404));
   }
 
   const uploader = async (path) => await uploads(path, "buyitnow/products");
@@ -77,5 +74,40 @@ export const uploadProductImages = async (req, res, next) => {
   res.status(200).json({
     data: urls,
     product,
+  });
+};
+
+export const updateProduct = async (req, res, next) => {
+  let product = await Product.findById(req.query.id);
+
+  if (!product) {
+    return next(new ErrorHandler("Product not found.", 404));
+  }
+
+  product = await Product.findByIdAndUpdate(req.query.id, req.body);
+
+  res.status(200).json({
+    product,
+  });
+};
+
+export const deleteProduct = async (req, res, next) => {
+  let product = await Product.findById(req.query.id);
+
+  if (!product) {
+    return next(new ErrorHandler("Product not found.", 404));
+  }
+
+  // Deleting images associated with the product
+  for (let i = 0; i < product.images.length; i++) {
+    const res = await cloudinary.v2.uploader.destroy(
+      product.images[i].public_id
+    );
+  }
+
+  await product.deleteOne();
+
+  res.status(200).json({
+    success: true,
   });
 };
