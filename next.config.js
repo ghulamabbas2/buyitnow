@@ -7,7 +7,7 @@ const nextConfig = {
     API_URL: "http://localhost:3000",
     DB_URI: "mongodb://localhost:27017/buyitnow",
 
-    CLOUD_NAME: "shopitnow-udemy",
+    CLOUD_NAME: "",
     CLOUDINARY_API_KEY: "",
     CLOUDINARY_API_SECRET: "",
 

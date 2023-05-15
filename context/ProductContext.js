@@ -28,6 +28,29 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
+  const uploadProductImages = async (formData, id) => {
+    try {
+      setLoading(true);
+
+      const { data } = await axios.post(
+        `${process.env.API_URL}/api/admin/products/upload_images/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (data?.data) {
+        setLoading(false);
+        router.replace("/admin/products");
+      }
+    } catch (error) {
+      setError(error?.response?.data?.message);
+    }
+  };
+
   const clearErrors = () => {
     setError(null);
   };
@@ -40,6 +63,7 @@ export const ProductProvider = ({ children }) => {
         updated,
         setUpdated,
         newProduct,
+        uploadProductImages,
 
         clearErrors,
       }}
