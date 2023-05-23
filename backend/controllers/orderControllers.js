@@ -55,6 +55,37 @@ export const myOrders = async (req, res) => {
   });
 };
 
+export const updateOrder = async (req, res) => {
+  let order = await Order.findById(req.query.id);
+
+  if (!order) {
+    return next(new ErrorHandler("No Order found with this ID", 404));
+  }
+
+  order = await Order.findByIdAndUpdate(req.query.id, {
+    orderStatus: req.body.orderStatus,
+  });
+
+  res.status(200).json({
+    success: true,
+    order,
+  });
+};
+
+export const deleteOrder = async (req, res) => {
+  let order = await Order.findById(req.query.id);
+
+  if (!order) {
+    return next(new ErrorHandler("No Order found with this ID", 404));
+  }
+
+  await order.deleteOne();
+
+  res.status(200).json({
+    success: true,
+  });
+};
+
 export const checkoutSession = async (req, res) => {
   const body = req.body;
 

@@ -5,12 +5,18 @@ import {
   authorizeRoles,
   isAuthenticatedUser,
 } from "@/backend/middlewares/auth";
-import { getOrder } from "@/backend/controllers/orderControllers";
+import {
+  deleteOrder,
+  getOrder,
+  updateOrder,
+} from "@/backend/controllers/orderControllers";
 
 const handler = nc({ onError });
 
 dbConnect();
 
 handler.use(isAuthenticatedUser, authorizeRoles("admin")).get(getOrder);
+handler.use(isAuthenticatedUser, authorizeRoles("admin")).put(updateOrder);
+handler.use(isAuthenticatedUser, authorizeRoles("admin")).delete(deleteOrder);
 
 export default handler;
