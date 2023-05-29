@@ -86,6 +86,21 @@ export const deleteOrder = async (req, res) => {
   });
 };
 
+export const canReview = async (req, res) => {
+  const productId = req.query.productId;
+
+  const orders = await Order.find({
+    user: req?.user?._id,
+    "orderItems.product": productId,
+  });
+
+  let canReview = orders?.length >= 1 ? true : false;
+
+  res.status(200).json({
+    canReview,
+  });
+};
+
 export const checkoutSession = async (req, res) => {
   const body = req.body;
 
