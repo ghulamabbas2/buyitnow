@@ -7,6 +7,10 @@ export default withAuth(
     const url = req.nextUrl.pathname;
     const userRole = req?.nextauth?.token?.user?.role;
 
+    if (url.startsWith("/api")) {
+      NextResponse.next().headers.append("Access-Control-Allow-Origin", "*");
+    }
+
     if (url?.startsWith("/admin") && userRole !== "admin") {
       return NextResponse.redirect(new URL("/", req.url));
     }
